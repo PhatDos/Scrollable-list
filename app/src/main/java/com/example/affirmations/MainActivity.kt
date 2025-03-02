@@ -20,10 +20,16 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
@@ -91,11 +97,29 @@ fun AffirmationCard(affirmation: Affirmation, modifier: Modifier = Modifier) {
                     .height(194.dp),
                 contentScale = ContentScale.Crop
             )
-            Text(
-                text = LocalContext.current.getString(affirmation.stringResourceId),
-                modifier = Modifier.padding(16.dp),
-                style = MaterialTheme.typography.headlineSmall
-            )
+            Row {
+                Text(
+                    text = LocalContext.current.getString(affirmation.stringResourceId),
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .weight(8f),
+                    style = MaterialTheme.typography.headlineSmall
+                )
+                Image(
+                    painter = painterResource(affirmation.like),
+                    contentDescription = stringResource(affirmation.stringResourceId),
+                    modifier = Modifier
+                        .weight(1f)
+                        .offset(x = (-25).dp, y = 9.dp)
+                )
+                Image(
+                    painter = painterResource(affirmation.dislike),
+                    contentDescription = stringResource(affirmation.stringResourceId),
+                    modifier = Modifier
+                        .weight(1f)
+                        .offset(x = (-12).dp, y = 9.dp)
+                )
+            }
         }
     }
 }
@@ -103,5 +127,5 @@ fun AffirmationCard(affirmation: Affirmation, modifier: Modifier = Modifier) {
 @Preview
 @Composable
 private fun AffirmationCardPreview() {
-    AffirmationCard(Affirmation(R.string.affirmation1, R.drawable.image1))
+    AffirmationCard(Affirmation(R.string.affirmation1, R.drawable.image1, R.drawable.like_freeicon, R.drawable.dislike))
 }
