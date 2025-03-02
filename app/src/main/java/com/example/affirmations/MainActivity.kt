@@ -19,6 +19,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -29,7 +30,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
@@ -46,6 +49,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.affirmations.data.Datasource
 import com.example.affirmations.model.Affirmation
+import androidx.compose.material3.Button
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.draw.scale
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
 import com.example.affirmations.ui.theme.AffirmationsTheme
 
 class MainActivity : ComponentActivity() {
@@ -97,28 +105,40 @@ fun AffirmationCard(affirmation: Affirmation, modifier: Modifier = Modifier) {
                     .height(194.dp),
                 contentScale = ContentScale.Crop
             )
-            Row {
+            Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
                     text = LocalContext.current.getString(affirmation.stringResourceId),
+                    fontSize = 26.sp,
                     modifier = Modifier
                         .padding(16.dp)
                         .weight(8f),
-                    style = MaterialTheme.typography.headlineSmall
+                    fontWeight = FontWeight.Bold,
+                    lineHeight = 30.sp
                 )
-                Image(
-                    painter = painterResource(affirmation.like),
-                    contentDescription = stringResource(affirmation.stringResourceId),
+                Button(onClick = { /*TODO*/ },
                     modifier = Modifier
-                        .weight(1f)
-                        .offset(x = (-25).dp, y = 9.dp)
-                )
-                Image(
-                    painter = painterResource(affirmation.dislike),
-                    contentDescription = stringResource(affirmation.stringResourceId),
+                        .size(40.dp)
+                        .weight(2f)) {
+                    Image(
+                        painter = painterResource(affirmation.like),
+                        contentDescription = stringResource(affirmation.stringResourceId),
+                        modifier = Modifier
+                            .scale(1.7f)
+                    )
+                }
+                Spacer(modifier = Modifier.width(12.dp))
+                Button(onClick = { /*TODO*/ },
                     modifier = Modifier
-                        .weight(1f)
-                        .offset(x = (-12).dp, y = 9.dp)
-                )
+                        .size(40.dp)
+                        .weight(2f)) {
+                    Image(
+                        painter = painterResource(affirmation.dislike),
+                        contentDescription = stringResource(affirmation.stringResourceId),
+                        modifier = Modifier
+                            .scale(1.75f)
+                    )
+                }
+                Spacer(modifier = Modifier.width(12.dp))
             }
         }
     }
